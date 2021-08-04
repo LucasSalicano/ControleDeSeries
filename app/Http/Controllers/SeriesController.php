@@ -4,7 +4,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
+use App\Services\CriadorDeSerie;
 use App\Serie;
+use App\Services\RemovedorDeSerie;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
@@ -25,16 +27,22 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        Serie::create($request->all());
-        $request->session()->flash('mensagem', 'Serie cadastrada com sucesso!');
+        $criadorDeSerie = new CriadorDeSerie();
+        $criadorDeSerie->criarSerie(
+            $request->nome,
+            $request->temporadas,
+            $request->episodios
+        );
 
+        $request->session()->flash('mensagem', 'Serie cadastrada com sucesso!');
         return redirect()->route('series_listar');
     }
 
-    public function remove(Request $request)
+    public function remove(Request $request, RemovedorDeSerie $removedorDeSerie)
     {
-        Serie::destroy($request->id);
-        $request->session()->flash('mensagem','Serie excluida com sucesso!');
+        $serie = $removedorDeSerie->removerSerie($request->id);
+
+        $request->session()->flash("mensagem", "Serie $serie excluida com sucesso!");
         return redirect()->route('series_listar');
     }
 
