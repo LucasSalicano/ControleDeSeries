@@ -53,5 +53,24 @@
                 nomeSerieEl.hidden = true;
             }
         }
+
+        function editarSerie(serieId){
+            let formData = new FormData();
+            const token = document.querySelector('input[name="_token"]').value;
+            const nome = document.querySelector(`#input-nome-serie-${serieId} > input`).value;
+
+            formData.append('nome', nome);
+            formData.append('_token', token);
+
+            const url = `/series/${serieId}/editaNome`;
+
+            fetch(url, {
+                body: formData,
+                method: 'POST'
+            }).then(() => {
+                toggleInput(serieId);
+                const nomeSerieEl = document.getElementById(`nome-serie-${serieId}`).textContent = nome;
+            })
+        }
     </script>
 @endsection
