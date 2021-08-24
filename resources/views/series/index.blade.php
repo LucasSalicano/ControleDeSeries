@@ -69,7 +69,7 @@
                 method: 'POST'
             }).then(() => {
                 toggleInput(serieId);
-                const nomeSerieEl = document.getElementById(`nome-serie-${serieId}`).textContent = nome;
+                document.getElementById(`nome-serie-${serieId}`).textContent = nome;
             })
         }
     </script>
