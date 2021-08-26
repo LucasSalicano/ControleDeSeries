@@ -5,11 +5,7 @@
 @endsection
 
 @section('conteudo')
-    @if(!empty($mensagem))
-        <div class="alert alert-success">
-            {{$mensagem}}
-        </div>
-    @endif
+    @include('mensagem', ['mensagem' => $mensagem])
     <a href="{{route('series_criar')}}" class="btn btn-dark mb-2">Adicionar</a>
     <ul class="list-group">
         @foreach($series as $serie)
@@ -54,7 +50,7 @@
             }
         }
 
-        function editarSerie(serieId){
+        function editarSerie(serieId) {
             let formData = new FormData();
             const token = document.querySelector('input[name="_token"]').value;
             const nome = document.querySelector(`#input-nome-serie-${serieId} > input`).value;

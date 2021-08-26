@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 
 class EpisodiosController extends Controller
 {
-    public function index(Temporada $temporada)
+    public function index(Request $request,Temporada $temporada)
     {
         return view('episodios.index', [
             "episodios" => $temporada->episodios,
-            "temporadaId" => $temporada->id
+            "temporadaId" => $temporada->id,
+            "mensagem" => $request->session()->get('mensagem')
         ]);
     }
 
@@ -23,5 +24,7 @@ class EpisodiosController extends Controller
             $episodio->assistido = in_array($episodio->id, $episodiosAssistidos);
         });
         $temporada->push();
+        $request->session()->flash('mensagem', 'Episodios marcados com sucesso!');
+        return redirect()->back();
     }
 }
