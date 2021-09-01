@@ -18,6 +18,8 @@
                 </li>
             @endforeach
         </ul>
-        <button class="btn btn-primary mt-2 mb-2">salvar</button>
+        @auth
+            <button class="btn btn-primary mt-2 mb-2">salvar</button>
+        @endauth
     </form>
 @endsection

@@ -6,7 +6,9 @@
 
 @section('conteudo')
     @include('mensagem', ['mensagem' => $mensagem])
-    <a href="{{route('series_criar')}}" class="btn btn-dark mb-2">Adicionar</a>
+    @auth
+        <a href="{{route('series_criar')}}" class="btn btn-dark mb-2">Adicionar</a>
+    @endauth
     <ul class="list-group">
         @foreach($series as $serie)
             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -21,18 +23,21 @@
                     </div>
                 </div>
                 <span class="d-flex">
-                 <button class="btn btn-dark btn-sm mr-1" onclick="toggleInput({{$serie->id}})">
-                     <i class="fas fa-edit"></i>
-                 </button>
+                    @auth
+                        <button class="btn btn-dark btn-sm mr-1" onclick="toggleInput({{$serie->id}})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    @endauth
                 <a href="/series/{{$serie->id}}/temporadas" class="btn btn-info btn-sm mr-2">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-
-                <form action="/series/remover/{{$serie->id}}" method="POST"
-                      onsubmit="return confirm('Deseja realmente excluir ?')">
+                 @auth
+                        <form action="/series/remover/{{$serie->id}}" method="POST"
+                              onsubmit="return confirm('Deseja realmente excluir ?')">
                     @csrf
                     <button class="btn btn-sm btn-danger"><i class="fas fa-minus-circle"></i></button>
                 </form>
+                    @endauth
                 </span>
             </li>
         @endforeach
