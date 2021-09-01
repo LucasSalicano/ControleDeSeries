@@ -20,11 +20,15 @@ Route::get('/series/criar', 'SeriesController@create');
 Route::post('/series/criar', 'SeriesController@store')->name('series_criar');
 Route::post('/series/remover/{id}', 'SeriesController@remove');
 Route::post('/series/{id}/editaNome', 'SeriesController@editaNome');
-
 Route::get('/series/{SerieId}/temporadas', 'TemporadasController@index');
 Route::get('/temporadas/{temporada}/episodios', 'EpisodiosController@index');
 Route::post('/temporadas/{temporada}/episodios/assistir', 'EpisodiosController@assistir');
 
-Auth::routes();
+Route::get('/registrar', 'RegistroController@create');
+Route::post('/registrar', 'RegistroController@store');
 
+Route::get('/entrar', 'EntrarController@index');
+Route::post('/entrar', 'EntrarController@entrar');
+
+Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

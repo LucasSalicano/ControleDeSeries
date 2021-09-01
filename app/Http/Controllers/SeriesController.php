@@ -8,9 +8,15 @@ use App\Services\CriadorDeSerie;
 use App\Serie;
 use App\Services\RemovedorDeSerie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SeriesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function listar(Request $request)
     {
@@ -25,7 +31,7 @@ class SeriesController extends Controller
         return view('series.criar', []);
     }
 
-    public function store(SeriesFormRequest $request)
+    public function criar(SeriesFormRequest $request)
     {
         $criadorDeSerie = new CriadorDeSerie();
         $criadorDeSerie->criarSerie(
